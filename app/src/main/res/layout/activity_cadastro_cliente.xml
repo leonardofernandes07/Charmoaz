@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.CadastroClienteActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_titulo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="7.5dp"
+                android:fontFamily="cursive"
+                android:gravity="center"
+                android:text="Cadastre o Cliente"
+                android:textColor="#EE3B3D3B"
+                android:textColorHighlight="#E7CF17"
+                android:textColorLink="#E7D319"
+                android:textSize="42dp"
+                android:textStyle="bold|italic"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.473"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layout_nome"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="7.5dp"
+                android:hint="Nome"
+                app:errorEnabled="true"
+                app:helperText="@string/Obrig"
+                app:helperTextEnabled="true"
+                app:startIconDrawable="@drawable/ic_person_black_24dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_nome"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="7.5dp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layout_cpf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="7.5dp"
+                android:hint="CPF"
+                app:errorEnabled="true"
+                app:helperText="@string/Obrig"
+                app:helperTextEnabled="true"
+                app:startIconDrawable="@drawable/ic_create_black_24dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_cpf"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="7.5dp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layout_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="7.5dp"
+                android:hint="Email"
+                app:errorEnabled="true"
+                app:helperText="@string/Obrig"
+                app:helperTextEnabled="true"
+                app:startIconDrawable="@drawable/ic_email_black_24dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="7.5dp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layout_celular"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="7.5dp"
+                android:hint="Celular"
+                app:errorEnabled="true"
+                app:helperText="@string/Obrig"
+                app:helperTextEnabled="true"
+                app:startIconDrawable="@drawable/ic_phone_black_24dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_celular"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="7.5dp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layout_cidade"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="7.5dp"
+                android:hint="Cidade"
+                app:errorEnabled="true"
+                app:helperText="@string/Obrig"
+                app:helperTextEnabled="true"
+                app:startIconDrawable="@drawable/ic_location_city_black_24dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_cidade"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="7.5dp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layout_bairro"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="7.5dp"
+                android:hint="Bairro"
+                app:errorEnabled="true"
+                app:helperText="@string/Obrig"
+                app:helperTextEnabled="true"
+                app:startIconDrawable="@drawable/ic_location_on_black_24dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_bairro"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="7.5dp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layout_endereco"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="7.5dp"
+            android:hint="Endereco"
+            app:errorEnabled="true"
+            app:helperText="@string/Obrig"
+            app:helperTextEnabled="true"
+            app:startIconDrawable="@drawable/ic_location_on_black_24dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_endereco"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="7.5dp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layout_numero"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="7.5dp"
+                android:hint="Numero"
+                app:errorEnabled="true"
+                app:helperText="@string/Obrig"
+                app:helperTextEnabled="true"
+                app:startIconDrawable="@drawable/ic_location_on_black_24dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_numero"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="7.5dp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layout_descricao"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="7.5dp"
+                android:hint="Descricao"
+                app:errorEnabled="true"
+                app:helperText="@string/Obrig"
+                app:helperTextEnabled="true"
+                app:startIconDrawable="@drawable/ic_create_black_24dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_descricao"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="7.5dp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </LinearLayout>
+    </ScrollView>
+</layout>
