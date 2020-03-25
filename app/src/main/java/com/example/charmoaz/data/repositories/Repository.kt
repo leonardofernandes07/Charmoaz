@@ -6,7 +6,6 @@ import com.example.charmoaz.data.entity.Cliente
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.schedulers.Schedulers
-import java.lang.Exception
 
 class Repository {
 
@@ -23,9 +22,15 @@ class Repository {
         .observeOn(AndroidSchedulers.mainThread())
 
 
-    private fun saveCliente(cliente: Cliente): Long {
+    fun insert(cliente: Cliente): Long {
         val dao = AppApplication.database.clienteDao()
-        return dao.insert(cliente)
+
+        return if (cliente.id == 0L)
+            dao.insert(cliente)
+        else {
+            dao.update(cliente)
+            cliente.id
+        }
     }
 
 

@@ -11,14 +11,9 @@ import com.example.charmoaz.data.entity.Cliente
 import com.example.charmoaz.databinding.ItemListaClienteBinding
 
 
-class MainAdapter(private val listener: OnClick) :
+class MainAdapter(private val listener: MainActivity) :
     RecyclerView.Adapter<MainAdapter.ViewHolder>() {
 
-    interface OnClick {
-
-        fun onClienteClick(cliente: Cliente)
-
-    }
 
     private val listPdv = mutableListOf<Cliente>()
 
@@ -28,7 +23,7 @@ class MainAdapter(private val listener: OnClick) :
             binding.cliente = cliente
 
             binding.cardView.setOnClickListener {
-                listener.onClienteClick(cliente)
+
             }
         }
     }

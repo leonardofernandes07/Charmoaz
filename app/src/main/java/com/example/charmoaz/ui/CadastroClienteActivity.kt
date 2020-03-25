@@ -4,27 +4,19 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import br.com.ambev.comodato.callerassinae.data.repositories.Repository
 import com.example.charmoaz.R
-import com.example.charmoaz.databinding.ActivityMainBinding
+import com.example.charmoaz.data.entity.Cliente
+import com.example.charmoaz.databinding.ActivityCadastroClienteBinding
 import com.example.charmoaz.util.VerificaCampo
-import kotlinx.android.synthetic.main.activity_cadastro_cliente.*
 
 class CadastroClienteActivity : AppCompatActivity() {
 
     private val verifica = VerificaCampo()
+    private val repository by lazy { Repository() }
 
-    private val layoutNome by lazy { layout_nome }
-    private val layoutCpf by lazy { layout_cpf }
-    private val layoutEmail by lazy { layout_email }
-    private val layoutCelular by lazy { layout_celular }
-    private val layoutCidade by lazy { layout_cidade }
-    private val layoutBairro by lazy { layout_bairro }
-    private val layoutEndereco by lazy { layout_endereco }
-    private val layoutNumero by lazy { layout_numero }
-    private val layoutDescricao by lazy { layout_descricao }
-
-    private val binding: ActivityMainBinding by lazy {
-        DataBindingUtil.setContentView<ActivityMainBinding>(
+    private val binding: ActivityCadastroClienteBinding by lazy {
+        DataBindingUtil.setContentView<ActivityCadastroClienteBinding>(
             this,
             R.layout.activity_cadastro_cliente
         )
@@ -38,21 +30,36 @@ class CadastroClienteActivity : AppCompatActivity() {
 
     fun salvarCliente(){
         if (verificaoDeCampo()){
+            val cliente = Cliente(
+                id = 0,
+                clienteId = 1,
+                clienteNome = binding.editNome.text.toString(),
+                clienteCpf = binding.editCpf.text.toString(),
+                clienteEmail = binding.editEmail.text.toString(),
+                clienteCelular = binding.editCelular.text.toString(),
+                cidade = binding.editCidade.text.toString(),
+                bairro = binding.editBairro.text.toString(),
+                endereco = binding.editEndereco.text.toString(),
+                numero = binding.editNumero.text.toString(),
+                clienteDescricao = binding.editDescricao.text.toString()
+            )
+            repository.insert(cliente)
             Toast.makeText(this,"Cadastro com sucesso",Toast.LENGTH_LONG).show()
+            finish()
         }else{
             Toast.makeText(this,"Cadastro Inválido",Toast.LENGTH_LONG).show()
         }
     }
 
     fun verificaoDeCampo(): Boolean {
-        return verifica.verificaVazio(layoutNome.editText?.text.toString()) &&
-                verifica.verificaCPF(layoutCpf.editText?.text.toString()) &&
-                verifica.verificaEmail(layoutEmail.editText?.text.toString()) &&
-                verifica.verificaCelular(layoutCelular.editText?.text.toString()) &&
-                verifica.verificaVazio(layoutCidade.editText?.text.toString()) &&
-                verifica.verificaVazio(layoutBairro.editText?.text.toString()) &&
-                verifica.verificaVazio(layoutEndereco.editText?.text.toString()) &&
-                verifica.verificaNumero(layoutNumero.editText?.text.toString()) &&
-                verifica.verificaVazio(layoutDescricao.editText?.text.toString())
+        return verifica.verificaVazio(binding.editNome.text.toString()) &&
+                verifica.verificaCPF(binding.editCpf.text.toString()) &&
+//                verifica.verificaEmail(binding.editEmail.text.toString()) &&
+                verifica.verificaCelular(binding.editCelular.text.toString()) &&
+                verifica.verificaVazio(binding.editCidade.text.toString()) &&
+                verifica.verificaVazio(binding.editBairro.text.toString()) &&
+                verifica.verificaVazio(binding.editEndereco.text.toString()) &&
+                verifica.verificaNumero(binding.editNumero.text.toString()) &&
+                verifica.verificaVazio(binding.editDescricao.text.toString())
     }
 }

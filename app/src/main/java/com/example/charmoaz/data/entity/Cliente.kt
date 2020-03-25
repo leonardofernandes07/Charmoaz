@@ -2,18 +2,7 @@ package com.example.charmoaz.data.entity
 
 import androidx.room.*
 
-@Entity(
-    tableName = "cliente",
-    indices = [
-        Index(value = ["endereco_id"], name = "idx_invoices_01")
-    ],
-    foreignKeys = [ForeignKey(
-        entity = Endereco::class,
-        parentColumns = arrayOf("id"),
-        childColumns = arrayOf("endereco_id"),
-        onDelete = ForeignKey.CASCADE
-    )]
-)
+@Entity(tableName = "cliente")
 data class Cliente @JvmOverloads constructor(
     @ColumnInfo(name = "id")
     @PrimaryKey(autoGenerate = true)
@@ -28,10 +17,14 @@ data class Cliente @JvmOverloads constructor(
     var clienteEmail: String,
     @ColumnInfo(name = "cliente_celular")
     var clienteCelular: String,
-    @ColumnInfo(name = "endereco_id")
-    var enderecoId: Int,
+    @ColumnInfo(name = "cidade")
+    var cidade: String,
+    @ColumnInfo(name = "bairro")
+    var bairro: String,
+    @ColumnInfo(name = "endereco")
+    var endereco: String,
     @ColumnInfo(name = "numero")
-    var numero: Int,
+    var numero: String,
     @ColumnInfo(name = "cliente_Descricao")
     var clienteDescricao: String
 
