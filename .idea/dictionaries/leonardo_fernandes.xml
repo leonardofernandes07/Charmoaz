@@ -2,6 +2,8 @@
   <dictionary name="leonardo.fernandes">
     <words>
       <w>bairro</w>
+      <w>cadastro</w>
+      <w>campo</w>
       <w>celular</w>
       <w>charmoaz</w>
       <w>cidade</w>
@@ -9,7 +11,13 @@
       <w>clientes</w>
       <w>descricao</w>
       <w>endereco</w>
+      <w>incompleto</w>
       <w>numero</w>
+      <w>preencher</w>
+      <w>salvar</w>
+      <w>verifica</w>
+      <w>verificao</w>
+      <w>virificao</w>
     </words>
   </dictionary>
 </component>

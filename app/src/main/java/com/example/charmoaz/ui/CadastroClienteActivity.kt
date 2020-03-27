@@ -1,14 +1,16 @@
 package com.example.charmoaz.ui
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import br.com.ambev.comodato.callerassinae.data.repositories.Repository
 import com.example.charmoaz.R
 import com.example.charmoaz.data.entity.Cliente
 import com.example.charmoaz.databinding.ActivityCadastroClienteBinding
+import com.example.charmoaz.util.Mascaras
 import com.example.charmoaz.util.VerificaCampo
+import com.example.charmoaz.util.VerificacoesTextWatcher
 
 class CadastroClienteActivity : AppCompatActivity() {
 
@@ -26,10 +28,16 @@ class CadastroClienteActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cadastro_cliente)
 
+        binding.fab.setOnClickListener {
+            salvarCliente()
+        }
+        virificaoTw()
     }
 
-    fun salvarCliente(){
+    private fun salvarCliente(){
+
         if (verificaoDeCampo()){
+
             val cliente = Cliente(
                 id = 0,
                 clienteId = 1,
@@ -51,7 +59,7 @@ class CadastroClienteActivity : AppCompatActivity() {
         }
     }
 
-    fun verificaoDeCampo(): Boolean {
+    private  fun verificaoDeCampo(): Boolean {
         return verifica.verificaVazio(binding.editNome.text.toString()) &&
                 verifica.verificaCPF(binding.editCpf.text.toString()) &&
 //                verifica.verificaEmail(binding.editEmail.text.toString()) &&
@@ -61,5 +69,34 @@ class CadastroClienteActivity : AppCompatActivity() {
                 verifica.verificaVazio(binding.editEndereco.text.toString()) &&
                 verifica.verificaNumero(binding.editNumero.text.toString()) &&
                 verifica.verificaVazio(binding.editDescricao.text.toString())
+    }
+
+    private fun virificaoTw(){
+        setMask()
+        binding.editNome.addTextChangedListener(VerificacoesTextWatcher(binding.layoutNome))
+        binding.editCpf.addTextChangedListener(VerificacoesTextWatcher(binding.layoutCpf))
+        binding.editEmail.addTextChangedListener(VerificacoesTextWatcher(binding.layoutEmail))
+        binding.editCelular.addTextChangedListener(VerificacoesTextWatcher(binding.layoutCelular))
+        binding.editCidade.addTextChangedListener(VerificacoesTextWatcher(binding.layoutCidade))
+        binding.editBairro.addTextChangedListener(VerificacoesTextWatcher(binding.layoutBairro))
+        binding.editEndereco.addTextChangedListener(VerificacoesTextWatcher(binding.layoutEndereco))
+        binding.editNumero.addTextChangedListener(VerificacoesTextWatcher(binding.layoutNumero))
+        binding.editDescricao.addTextChangedListener(VerificacoesTextWatcher(binding.layoutDescricao))
+    }
+
+    private fun setMask(){
+        binding.editCelular.addTextChangedListener(
+            Mascaras.insert(
+                Mascaras.MaskType.TEL,
+                binding.editCelular
+            )
+        )
+
+        binding.editCpf.addTextChangedListener(
+            Mascaras.insert(
+                Mascaras.MaskType.CPF,
+                binding.editCpf
+            )
+        )
     }
 }

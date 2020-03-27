@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 29
@@ -49,7 +50,7 @@ android {
 
 dependencies {
     def lifecycle_version = "2.2.0"
-    def room_version = "2.2.4"
+    def room_version = "2.2.5"
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.appcompat:appcompat:1.1.0'
@@ -64,10 +65,8 @@ dependencies {
     implementation 'io.reactivex.rxjava3:rxjava:3.0.0'
 
     implementation "androidx.room:room-runtime:$room_version"
-    //kapt "androidx.room:room-compiler:$room_version" // For Kotlin use kapt instead of annotationProcessor
-    // optional - RxJava support for Room
     implementation "androidx.room:room-rxjava2:$room_version"
-
+    kapt "androidx.room:room-compiler:$room_version"
 
     //RecyclerVIew
     implementation "androidx.recyclerview:recyclerview:1.1.0"
@@ -95,8 +94,5 @@ dependencies {
     implementation 'com.android.support:cardview-v7:28.0.0'
 
     implementation "org.jetbrains.kotlin:kotlin-reflect:1.3.70"
-
-    implementation 'com.github.Chrispassold.assinatura-digital-hbsis:domain:1.8.0'
-    implementation 'com.github.Chrispassold.assinatura-digital-hbsis:caller:1.8.0'
 
 }

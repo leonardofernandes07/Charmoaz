@@ -38,13 +38,9 @@ class MainViewModel : ViewModel(){
         repository.getAll()
             .doOnNext {
                 _clienteList.postValue(it)
-            }.doOnError {
-                _loading.value = false
-                _errorMessage.postValue(it.message)
             }
             .doOnComplete {
                 _loading.postValue(false)
-
             }
             .subscribe().also {
                 compositeDisposable.remove(it)
