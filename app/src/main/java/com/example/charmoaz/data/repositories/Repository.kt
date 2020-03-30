@@ -1,6 +1,7 @@
 package br.com.ambev.comodato.callerassinae.data.repositories
 
 import com.example.charmoaz.AppApplication
+import com.example.charmoaz.data.DatabaseApplication
 import com.example.charmoaz.data.dao.ClienteDao
 import com.example.charmoaz.data.entity.Cliente
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -24,6 +25,7 @@ class Repository {
 
     fun insert(cliente: Cliente): Long {
         val dao = AppApplication.database.clienteDao()
+
 
         return if (cliente.id == 0L)
             dao.insert(cliente)

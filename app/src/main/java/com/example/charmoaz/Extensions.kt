@@ -5,6 +5,7 @@ import android.net.Uri
 import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import io.reactivex.rxjava3.core.ObservableEmitter
 import java.io.File
 import java.io.FileOutputStream
 import java.io.InputStream
@@ -34,4 +35,5 @@ fun String.formatIntBrazil(): Int {
 fun Context.showToast(message: String, duration: Int = Toast.LENGTH_SHORT) {
     Toast.makeText(this, message, duration).show()
 }
+
 
