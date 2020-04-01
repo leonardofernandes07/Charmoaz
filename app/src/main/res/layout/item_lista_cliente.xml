@@ -45,8 +45,9 @@
                     android:id="@+id/delet"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_margin="25dp"
+                    android:layout_margin="20dp"
                     android:layout_weight="1"
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
                     app:srcCompat="@drawable/ic_delete_black_24dp" />
 
             </LinearLayout>

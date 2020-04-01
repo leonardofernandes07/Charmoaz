@@ -98,4 +98,8 @@ class MainViewModel : ViewModel() {
             .subscribe()
     }
 
+    fun searchCliente(){
+
+    }
+
 }
