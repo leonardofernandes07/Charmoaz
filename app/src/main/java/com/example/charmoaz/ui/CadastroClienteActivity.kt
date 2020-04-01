@@ -9,20 +9,12 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import br.com.ambev.comodato.callerassinae.data.repositories.Repository
+import br.com.hbsis.padawan.posmanagement.ui.cadastrocliente.VerificacoesTextWatcher
 import com.example.charmoaz.R
 import com.example.charmoaz.data.entity.Cliente
 import com.example.charmoaz.databinding.ActivityCadastroClienteBinding
 import com.example.charmoaz.util.Mascaras
 import com.example.charmoaz.util.VerificaCampo
-import com.example.charmoaz.util.VerificacoesTextWatcher
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.annotations.NonNull
-import io.reactivex.rxjava3.core.Observable
-import io.reactivex.rxjava3.core.ObservableEmitter
-import io.reactivex.rxjava3.core.ObservableOnSubscribe
-import io.reactivex.rxjava3.core.Scheduler
-import io.reactivex.rxjava3.schedulers.Schedulers
-import java.lang.Exception
 
 class CadastroClienteActivity : AppCompatActivity() {
 
@@ -50,41 +42,34 @@ class CadastroClienteActivity : AppCompatActivity() {
         virificaoTw()
     }
 
-    @SuppressLint("LongLogTag")
+
     private fun salvarCliente() {
-        viewModel.clienteList.observe(this, Observer {
-            try {
-                if (verificaoDeCampo()) {
-                    Log.e("Campo Verificado", verificaoDeCampo().toString())
-                    val cliente = Cliente(
-                        id = 0,
-                        clienteId = 1,
-                        clienteNome = binding.editNome.text.toString(),
-                        clienteCpf = binding.editCpf.text.toString(),
-                        clienteEmail = binding.editEmail.text.toString(),
-                        clienteCelular = binding.editCelular.text.toString(),
-                        cidade = binding.editCidade.text.toString(),
-                        bairro = binding.editBairro.text.toString(),
-                        endereco = binding.editEndereco.text.toString(),
-                        numero = binding.editNumero.text.toString(),
-                        clienteDescricao = binding.editDescricao.text.toString()
-                    )
-                    repository.insert(cliente)
-                    Log.e("Inseriu", repository.getAll().toString())
-                    Toast.makeText(this, "Cadastro com sucesso", Toast.LENGTH_LONG).show()
-                    finish()
-                } else {
-                    Toast.makeText(this, "Cadastro inválido", Toast.LENGTH_LONG).show()
-                }
-            } catch (e: Exception) {
-            }
-        })
+        if (verificaoDeCampo()){
+            val cliente = Cliente(
+                id = 0,
+                clienteId = 1,
+                clienteNome = binding.editNome.text.toString(),
+                clienteCpf = binding.editCpf.text.toString(),
+                clienteEmail = binding.editEmail.text.toString(),
+                clienteCelular = binding.editCelular.text.toString(),
+                cidade = binding.editCidade.text.toString(),
+                bairro = binding.editBairro.text.toString(),
+                endereco = binding.editEndereco.text.toString(),
+                numero = binding.editNumero.text.toString(),
+                clienteDescricao = binding.editDescricao.text.toString()
+            )
+            viewModel.saveCliente(cliente)
+            Toast.makeText(applicationContext, "Cadastro Válido", Toast.LENGTH_LONG).show()
+            finish()
+        }else{
+            Toast.makeText(applicationContext, "Cadastro Inválido", Toast.LENGTH_LONG).show()
+        }
     }
 
     private fun verificaoDeCampo(): Boolean {
         return verifica.verificaVazio(binding.editNome.text.toString()) &&
                 verifica.verificaCPF(binding.editCpf.text.toString()) &&
-//                verifica.verificaEmail(binding.editEmail.text.toString()) &&
+                verifica.verificaEmail(binding.editEmail.text.toString()) &&
                 verifica.verificaCelular(binding.editCelular.text.toString()) &&
                 verifica.verificaVazio(binding.editCidade.text.toString()) &&
                 verifica.verificaVazio(binding.editBairro.text.toString()) &&

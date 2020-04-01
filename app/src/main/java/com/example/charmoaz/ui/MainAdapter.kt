@@ -3,7 +3,6 @@ package com.example.charmoaz.ui
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.charmoaz.R
@@ -14,23 +13,28 @@ import com.example.charmoaz.databinding.ItemListaClienteBinding
 class MainAdapter(private val listener: MainActivity) :
     RecyclerView.Adapter<MainAdapter.ViewHolder>() {
 
+    private val viewModel by lazy { MainViewModel() }
 
-    private val listPdv = mutableListOf<Cliente>()
+    private val listCliente = mutableListOf<Cliente>()
 
     inner class ViewHolder(private val binding: ItemListaClienteBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(cliente: Cliente) {
             binding.cliente = cliente
 
-            binding.cardView.setOnClickListener {
-
-            }
+            binding.delet.setOnClickListener(View.OnClickListener {
+                viewModel.deletCliente(listCliente[adapterPosition])
+                if (viewModel.loading.value == true){
+                }else{
+                    uptadeList(listCliente)
+                }
+            })
         }
     }
 
     fun uptadeList(list: List<Cliente>) {
-        listPdv.clear()
-        listPdv.addAll(list)
+        listCliente.clear()
+        listCliente.addAll(list)
         notifyDataSetChanged()
     }
 
@@ -42,17 +46,17 @@ class MainAdapter(private val listener: MainActivity) :
             false
         )
         binding.cardView.setOnClickListener(View.OnClickListener {
-            binding.imageView.isVisible = !binding.imageView.isVisible
+
         })
         return ViewHolder(binding)
     }
 
     override fun getItemCount(): Int {
-        return listPdv.size
+        return listCliente.size
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(listPdv[position])
+        holder.bind(listCliente[position])
     }
 
 

@@ -12,12 +12,14 @@
       <w>descricao</w>
       <w>endereco</w>
       <w>incompleto</w>
+      <w>inválido</w>
       <w>numero</w>
       <w>preencher</w>
       <w>salvar</w>
       <w>verifica</w>
       <w>verificao</w>
       <w>virificao</w>
+      <w>válido</w>
     </words>
   </dictionary>
 </component>

@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.charmoaz.R
 import com.example.charmoaz.databinding.ActivityMainBinding
 import com.example.charmoaz.showToast
+import kotlinx.android.synthetic.main.content_main.view.*
 import pub.devrel.easypermissions.EasyPermissions
 import pub.devrel.easypermissions.PermissionRequest
 
@@ -43,6 +44,8 @@ class MainActivity : AppCompatActivity() {
                 .build()
         )
 
+        viewModel.fetchCliente()
+
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -67,6 +70,7 @@ class MainActivity : AppCompatActivity() {
             setHasFixedSize(true)
             adapter = MainAdapter(this@MainActivity)
        }
+
         viewModel.clienteList.observe(this, Observer {
             (recycler.adapter as MainAdapter).uptadeList(it)
         })
