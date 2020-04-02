@@ -10,10 +10,12 @@ import com.example.charmoaz.data.entity.Cliente
 import com.example.charmoaz.databinding.ItemListaClienteBinding
 
 
-class MainAdapter(private val listener: MainActivity) :
+class MainAdapter(private val listener: OnItemAction) :
     RecyclerView.Adapter<MainAdapter.ViewHolder>() {
 
-    private val viewModel by lazy { MainViewModel() }
+    interface OnItemAction {
+        fun onDelete(cliente: Cliente)
+    }
 
     private val listCliente = mutableListOf<Cliente>()
 
@@ -23,11 +25,7 @@ class MainAdapter(private val listener: MainActivity) :
             binding.cliente = cliente
 
             binding.delet.setOnClickListener(View.OnClickListener {
-                viewModel.deletCliente(listCliente[adapterPosition])
-                if (viewModel.loading.value == true){
-                }else{
-                    uptadeList(listCliente)
-                }
+                listener.onDelete(listCliente[adapterPosition])
             })
         }
     }

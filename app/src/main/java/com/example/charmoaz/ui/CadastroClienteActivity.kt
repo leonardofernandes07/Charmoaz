@@ -17,7 +17,6 @@ import kotlin.random.Random
 class CadastroClienteActivity : AppCompatActivity() {
 
     private val verifica = VerificaCampo()
-    private val repository by lazy { Repository() }
 
     private val viewModel: MainViewModel by lazy {
         ViewModelProvider(this).get(MainViewModel::class.java)

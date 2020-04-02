@@ -10,13 +10,14 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.charmoaz.R
+import com.example.charmoaz.data.entity.Cliente
 import com.example.charmoaz.databinding.ActivityMainBinding
 import com.example.charmoaz.showToast
 import kotlinx.android.synthetic.main.content_main.view.*
 import pub.devrel.easypermissions.EasyPermissions
 import pub.devrel.easypermissions.PermissionRequest
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), MainAdapter.OnItemAction {
 
     private val recycler by lazy { binding.includeContentMain.recyclerView }
 
@@ -45,7 +46,6 @@ class MainActivity : AppCompatActivity() {
         )
 
         viewModel.fetchCliente()
-
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -75,5 +75,9 @@ class MainActivity : AppCompatActivity() {
             (recycler.adapter as MainAdapter).uptadeList(it)
         })
 
+    }
+
+    override fun onDelete(cliente: Cliente) {
+        viewModel.deletCliente(cliente)
     }
 }

@@ -79,18 +79,18 @@ class MainViewModel : ViewModel() {
     }
 
     fun deletCliente(cliente: Cliente) {
-        Completable.create(CompletableOnSubscribe { emmiter: @NonNull CompletableEmitter ->
+        Completable.create { emmiter: @NonNull CompletableEmitter ->
             try {
                 repository.delet(cliente)
                 emmiter.onComplete()
             } catch (e: Exception) {
                 emmiter.onError(e)
             }
-        }).subscribeOn(Schedulers.computation())
+        }
+            .subscribeOn(Schedulers.computation())
             .observeOn(AndroidSchedulers.mainThread())
             .doOnComplete() {
                 fetchCliente()
-                _loading.postValue(false)
             }
             .doOnError {
                 _errorMessage.postValue(toString())
@@ -98,8 +98,7 @@ class MainViewModel : ViewModel() {
             .subscribe()
     }
 
-    fun searchCliente(){
+    fun searchCliente() {
 
     }
-
 }
