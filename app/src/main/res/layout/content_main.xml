@@ -17,27 +17,17 @@
         android:paddingTop="?attr/actionBarSize"
         android:layout_height="match_parent">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/outlinedTextField"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/search"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Pesquisar"
+            android:background="@color/colorPrimary"
             app:layout_constraintBottom_toTopOf="@+id/recyclerView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="MissingConstraints,PrivateResource"
-            android:layout_marginLeft="@dimen/mtrl_card_spacing"
-            android:layout_marginTop="@dimen/mtrl_card_spacing"
-            android:layout_marginRight="@dimen/mtrl_card_spacing">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:drawableStart="@drawable/ic_search_black_24dp" />
-
-        </com.google.android.material.textfield.TextInputLayout>
+            app:searchIcon="@drawable/ic_search_black_24dp" />
 
         <ProgressBar
             android:id="@+id/progressBar"
@@ -59,7 +49,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/outlinedTextField">
+            app:layout_constraintTop_toBottomOf="@+id/search"
+            app:layout_constraintVertical_bias="0.0">
 
         </androidx.recyclerview.widget.RecyclerView>
 

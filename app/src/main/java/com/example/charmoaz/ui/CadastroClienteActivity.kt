@@ -2,10 +2,10 @@ package com.example.charmoaz.ui
 
 import android.os.Bundle
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
-import br.com.ambev.comodato.callerassinae.data.repositories.Repository
 import br.com.hbsis.padawan.posmanagement.ui.cadastrocliente.VerificacoesTextWatcher
 import com.example.charmoaz.R
 import com.example.charmoaz.data.entity.Cliente
@@ -42,7 +42,7 @@ class CadastroClienteActivity : AppCompatActivity() {
 
     private fun salvarCliente() {
         val randomValues = List(1) { Random.nextInt(0, 999) }
-        if (verificaoDeCampo()){
+        if (verificaoDeCampo()) {
             val cliente = Cliente(
                 id = 0,
                 clienteId = 0,
@@ -60,7 +60,7 @@ class CadastroClienteActivity : AppCompatActivity() {
             viewModel.saveCliente(cliente)
             Toast.makeText(applicationContext, "Cadastro Válido", Toast.LENGTH_LONG).show()
             finish()
-        }else{
+        } else {
             Toast.makeText(applicationContext, "Cadastro Inválido", Toast.LENGTH_LONG).show()
         }
     }
@@ -82,12 +82,36 @@ class CadastroClienteActivity : AppCompatActivity() {
         binding.editNome.addTextChangedListener(VerificacoesTextWatcher(binding.layoutNome))
         binding.editCpf.addTextChangedListener(VerificacoesTextWatcher(binding.layoutCpf))
         binding.editEmail.addTextChangedListener(VerificacoesTextWatcher(binding.layoutEmail))
-        binding.editCelular.addTextChangedListener(VerificacoesTextWatcher(binding.layoutCelular))
-        binding.editCidade.addTextChangedListener(VerificacoesTextWatcher(binding.layoutCidade))
-        binding.editBairro.addTextChangedListener(VerificacoesTextWatcher(binding.layoutBairro))
-        binding.editEndereco.addTextChangedListener(VerificacoesTextWatcher(binding.layoutEndereco))
-        binding.editNumero.addTextChangedListener(VerificacoesTextWatcher(binding.layoutNumero))
-        binding.editDescricao.addTextChangedListener(VerificacoesTextWatcher(binding.layoutDescricao))
+        binding.editCelular.addTextChangedListener(
+            VerificacoesTextWatcher(
+                binding.layoutCelular
+            )
+        )
+        binding.editCidade.addTextChangedListener(
+            VerificacoesTextWatcher(
+                binding.layoutCidade
+            )
+        )
+        binding.editBairro.addTextChangedListener(
+            VerificacoesTextWatcher(
+                binding.layoutBairro
+            )
+        )
+        binding.editEndereco.addTextChangedListener(
+            VerificacoesTextWatcher(
+                binding.layoutEndereco
+            )
+        )
+        binding.editNumero.addTextChangedListener(
+            VerificacoesTextWatcher(
+                binding.layoutNumero
+            )
+        )
+        binding.editDescricao.addTextChangedListener(
+            VerificacoesTextWatcher(
+                binding.layoutDescricao
+            )
+        )
     }
 
     private fun setMask() {
@@ -104,6 +128,17 @@ class CadastroClienteActivity : AppCompatActivity() {
                 binding.editCpf
             )
         )
+    }
+
+    override fun onBackPressed() {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Atenção!")
+        builder.setMessage("Você deseja sair sem salvar?")
+        builder.setPositiveButton(getString(R.string.sair)) { _, _ ->
+            finish()
+        }
+        builder.setNegativeButton(getString(R.string.cancelar)) { _, _ -> }
+        builder.show()
     }
 }
 

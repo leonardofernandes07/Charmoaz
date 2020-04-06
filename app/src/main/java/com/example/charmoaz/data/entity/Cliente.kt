@@ -1,6 +1,8 @@
 package com.example.charmoaz.data.entity
 
+import android.os.Parcelable
 import androidx.room.*
+import kotlinx.android.parcel.Parcelize
 
 @Entity(tableName = "cliente")
 data class Cliente @JvmOverloads constructor(
@@ -27,5 +29,4 @@ data class Cliente @JvmOverloads constructor(
     var numero: String,
     @ColumnInfo(name = "cliente_Descricao")
     var clienteDescricao: String
-
 )

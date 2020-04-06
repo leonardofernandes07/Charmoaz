@@ -1,14 +1,23 @@
 package com.example.charmoaz.ui
 
 import android.Manifest
+import android.app.SearchManager
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
+import androidx.appcompat.widget.SearchView.OnQueryTextListener
+import androidx.core.widget.addTextChangedListener
 import androidx.databinding.DataBindingUtil
+import androidx.databinding.adapters.SearchViewBindingAdapter
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import br.com.hbsis.padawan.posmanagement.ui.cadastrocliente.VerificacoesTextWatcher
 import com.example.charmoaz.R
 import com.example.charmoaz.data.entity.Cliente
 import com.example.charmoaz.databinding.ActivityMainBinding
@@ -62,6 +71,19 @@ class MainActivity : AppCompatActivity(), MainAdapter.OnItemAction {
             val i = Intent(applicationContext, CadastroClienteActivity::class.java)
             startActivity(i)
         })
+
+
+        binding.includeContentMain.search.setOnQueryTextListener(object: SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String): Boolean {
+                (recycler.adapter as MainAdapter).filter.filter(newText)
+                return false
+            }
+
+        })
     }
 
     private fun setupList() {
@@ -80,4 +102,9 @@ class MainActivity : AppCompatActivity(), MainAdapter.OnItemAction {
     override fun onDelete(cliente: Cliente) {
         viewModel.deletCliente(cliente)
     }
+
+    override fun onDetail(id: Long) {
+
+    }
+
 }

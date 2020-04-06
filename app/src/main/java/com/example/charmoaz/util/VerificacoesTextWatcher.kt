@@ -1,9 +1,9 @@
 package br.com.hbsis.padawan.posmanagement.ui.cadastrocliente
 
-import android.content.Context
 import android.text.Editable
 import android.text.TextWatcher
 import com.example.charmoaz.R
+import com.example.charmoaz.data.entity.Cliente
 import com.example.charmoaz.util.VerificaCampo
 import com.google.android.material.textfield.TextInputLayout
 
@@ -11,12 +11,10 @@ class VerificacoesTextWatcher : TextWatcher {
     private var layoutText: TextInputLayout? = null
     private val verificaCampo: VerificaCampo = VerificaCampo()
     private var campoVerificado = true
-    private var context: Context? = null
 
     constructor(layoutText: TextInputLayout?) {
         this.layoutText = layoutText
     }
-
 
     override fun beforeTextChanged(
         s: CharSequence,

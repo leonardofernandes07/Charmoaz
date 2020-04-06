@@ -8,10 +8,7 @@ import com.example.charmoaz.asImmutable
 import com.example.charmoaz.data.entity.Cliente
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.annotations.NonNull
-import io.reactivex.rxjava3.core.Completable
-import io.reactivex.rxjava3.core.CompletableEmitter
-import io.reactivex.rxjava3.core.CompletableOnSubscribe
-import io.reactivex.rxjava3.core.SingleObserver
+import io.reactivex.rxjava3.core.*
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.schedulers.Schedulers
@@ -98,7 +95,5 @@ class MainViewModel : ViewModel() {
             .subscribe()
     }
 
-    fun searchCliente() {
 
-    }
 }
