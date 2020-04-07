@@ -1,11 +1,14 @@
 package com.example.charmoaz.ui
 
+import android.content.Context
 import android.os.Bundle
+import android.provider.Settings.Global.getString
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
+import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.charmoaz.R
@@ -13,7 +16,7 @@ import com.example.charmoaz.data.entity.Cliente
 import com.example.charmoaz.databinding.ItemListaClienteBinding
 
 
-class MainAdapter(private val listener: OnItemAction) :
+class MainAdapter(private val listener: OnItemAction,private val context: Context) :
     RecyclerView.Adapter<MainAdapter.ViewHolder>(), Filterable {
 
     interface OnItemAction {
@@ -32,7 +35,14 @@ class MainAdapter(private val listener: OnItemAction) :
 
             }
             binding.delet.setOnClickListener(View.OnClickListener {
-                listener.onDelete(listCliente[adapterPosition])
+                val builder = AlertDialog.Builder(context)
+                builder.setTitle("Atenção!")
+                builder.setMessage("Você têm certeza que deseja deletar?")
+                builder.setPositiveButton("Deletar") { _, _ ->
+                    listener.onDelete(listCliente[adapterPosition])
+                }
+                builder.setNegativeButton("Cancelar") { _, _ -> }
+                builder.show()
             })
         }
     }

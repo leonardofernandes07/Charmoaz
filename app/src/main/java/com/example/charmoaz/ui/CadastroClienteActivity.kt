@@ -14,7 +14,7 @@ import com.example.charmoaz.util.Mascaras
 import com.example.charmoaz.util.VerificaCampo
 import kotlin.random.Random
 
-class CadastroClienteActivity : AppCompatActivity() {
+class CadastroClienteActivity : AppCompatActivity() , MainAdapter.OnItemAction{
 
     private val verifica = VerificaCampo()
 
@@ -46,15 +46,15 @@ class CadastroClienteActivity : AppCompatActivity() {
             val cliente = Cliente(
                 id = 0,
                 clienteId = 0,
-                clienteNome = binding.editNome.text.toString(),
-                clienteCpf = binding.editCpf.text.toString(),
-                clienteEmail = binding.editEmail.text.toString(),
-                clienteCelular = binding.editCelular.text.toString(),
-                cidade = binding.editCidade.text.toString(),
-                bairro = binding.editBairro.text.toString(),
-                endereco = binding.editEndereco.text.toString(),
-                numero = binding.editNumero.text.toString(),
-                clienteDescricao = binding.editDescricao.text.toString()
+                clienteNome = binding.editNome.text.toString().trim(),
+                clienteCpf = binding.editCpf.text.toString().trim(),
+                clienteEmail = binding.editEmail.text.toString().trim(),
+                clienteCelular = binding.editCelular.text.toString().trim(),
+                cidade = binding.editCidade.text.toString().trim(),
+                bairro = binding.editBairro.text.toString().trim(),
+                endereco = binding.editEndereco.text.toString().trim(),
+                numero = binding.editNumero.text.toString().trim(),
+                clienteDescricao = binding.editDescricao.text.toString().trim()
             )
             cliente.clienteId = randomValues[0].toLong()
             viewModel.saveCliente(cliente)
@@ -139,6 +139,17 @@ class CadastroClienteActivity : AppCompatActivity() {
         }
         builder.setNegativeButton(getString(R.string.cancelar)) { _, _ -> }
         builder.show()
+    }
+
+    override fun finish() {
+        super.finish()
+        overridePendingTransition(R.xml.fade_in, R.xml.mover_direita)
+    }
+
+    override fun onDelete(cliente: Cliente) {}
+
+    override fun onDetail(id: Long) {
+
     }
 }
 

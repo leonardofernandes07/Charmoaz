@@ -1,28 +1,21 @@
 package com.example.charmoaz.ui
 
 import android.Manifest
-import android.app.SearchManager
 import android.content.Intent
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
-import androidx.appcompat.widget.SearchView.OnQueryTextListener
-import androidx.core.widget.addTextChangedListener
+import androidx.core.app.ActivityCompat
+import androidx.core.app.ActivityOptionsCompat
 import androidx.databinding.DataBindingUtil
-import androidx.databinding.adapters.SearchViewBindingAdapter
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import br.com.hbsis.padawan.posmanagement.ui.cadastrocliente.VerificacoesTextWatcher
 import com.example.charmoaz.R
 import com.example.charmoaz.data.entity.Cliente
 import com.example.charmoaz.databinding.ActivityMainBinding
 import com.example.charmoaz.showToast
-import kotlinx.android.synthetic.main.content_main.view.*
 import pub.devrel.easypermissions.EasyPermissions
 import pub.devrel.easypermissions.PermissionRequest
 
@@ -69,11 +62,18 @@ class MainActivity : AppCompatActivity(), MainAdapter.OnItemAction {
 
         binding.fab.setOnClickListener(View.OnClickListener {
             val i = Intent(applicationContext, CadastroClienteActivity::class.java)
-            startActivity(i)
+            val activityOpyionsCompat: ActivityOptionsCompat =
+                ActivityOptionsCompat.makeCustomAnimation(
+                    applicationContext,
+                    R.xml.mover_esquerda, R.xml.fade_out
+                )
+            ActivityCompat.startActivity(this@MainActivity, i, activityOpyionsCompat.toBundle())
+
         })
 
 
-        binding.includeContentMain.search.setOnQueryTextListener(object: SearchView.OnQueryTextListener{
+        binding.includeContentMain.search.setOnQueryTextListener(object :
+            SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
                 return false
             }
@@ -90,8 +90,8 @@ class MainActivity : AppCompatActivity(), MainAdapter.OnItemAction {
         recycler.apply {
             layoutManager = LinearLayoutManager(context)
             setHasFixedSize(true)
-            adapter = MainAdapter(this@MainActivity)
-       }
+            adapter = MainAdapter(this@MainActivity, this.context)
+        }
 
         viewModel.clienteList.observe(this, Observer {
             (recycler.adapter as MainAdapter).uptadeList(it)
@@ -103,8 +103,6 @@ class MainActivity : AppCompatActivity(), MainAdapter.OnItemAction {
         viewModel.deletCliente(cliente)
     }
 
-    override fun onDetail(id: Long) {
-
-    }
+    override fun onDetail(id: Long) {}
 
 }

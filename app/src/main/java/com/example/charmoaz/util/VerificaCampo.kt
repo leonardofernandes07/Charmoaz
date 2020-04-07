@@ -7,7 +7,7 @@ class VerificaCampo {
     }
 
     fun verificaEmail(campo: String): Boolean {
-        return campo.contains("@") && campo.contains(".")
+        return campo.contains("@") && campo.contains(".") || campo.isEmpty()
     }
 
 
@@ -17,7 +17,7 @@ class VerificaCampo {
     }
 
     fun verificaCPF(campo: String): Boolean {
-        return campo.length == 14
+        return campo.length == 14 || campo.isEmpty()
     }
 
     fun verificaCelular(campo: String): Boolean {
