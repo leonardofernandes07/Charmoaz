@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.core.app.ActivityCompat
@@ -90,7 +91,7 @@ class MainActivity : AppCompatActivity(), MainAdapter.OnItemAction {
         recycler.apply {
             layoutManager = LinearLayoutManager(context)
             setHasFixedSize(true)
-            adapter = MainAdapter(this@MainActivity, this.context)
+            adapter = MainAdapter(this@MainActivity)
         }
 
         viewModel.clienteList.observe(this, Observer {
@@ -100,9 +101,36 @@ class MainActivity : AppCompatActivity(), MainAdapter.OnItemAction {
     }
 
     override fun onDelete(cliente: Cliente) {
-        viewModel.deletCliente(cliente)
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Atenção!")
+        builder.setMessage("Você têm certeza que deseja deletar?")
+        builder.setPositiveButton("Deletar") { _, _ ->
+            viewModel.deletCliente(cliente)
+        }
+        builder.setNegativeButton("Cancelar") { _, _ -> }
+        builder.show()
     }
 
-    override fun onDetail(id: Long) {}
+    override fun onDetail(id: Long) {
+        val intent = Intent(this, CadastroClienteActivity::class.java)
+        val activityOpyionsCompat: ActivityOptionsCompat =
+            ActivityOptionsCompat.makeCustomAnimation(
+                applicationContext,
+                R.xml.mover_esquerda, R.xml.fade_out
+            )
+        intent.putExtra(CadastroClienteActivity.EXTRA_CLIENT_ID, id)
+        ActivityCompat.startActivity(this@MainActivity, intent, activityOpyionsCompat.toBundle())
+    }
+
+    override fun onBackPressed() {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Atenção!")
+        builder.setMessage("Você têm certeza que deseja sair?")
+        builder.setPositiveButton("Sair") { _, _ ->
+            super.onBackPressed()
+        }
+        builder.setNegativeButton("Cancelar") { _, _ -> }
+        builder.show()
+    }
 
 }

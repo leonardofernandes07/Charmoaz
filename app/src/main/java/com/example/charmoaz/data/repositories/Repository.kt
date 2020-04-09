@@ -5,6 +5,7 @@ import com.example.charmoaz.data.DatabaseApplication
 import com.example.charmoaz.data.dao.ClienteDao
 import com.example.charmoaz.data.entity.Cliente
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.annotations.NonNull
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.schedulers.Schedulers
 
@@ -21,6 +22,17 @@ class Repository {
         }
         .subscribeOn(Schedulers.computation())
         .observeOn(AndroidSchedulers.mainThread())
+
+    fun getClienteById(id : Long): Observable<Cliente> = Observable
+        .fromCallable {
+
+            val cliente: Cliente = clienteDao.findById(id)
+
+            cliente
+        }
+        .subscribeOn(Schedulers.computation())
+        .observeOn(AndroidSchedulers.mainThread())
+
 
 
     fun insert(cliente: Cliente): Long {

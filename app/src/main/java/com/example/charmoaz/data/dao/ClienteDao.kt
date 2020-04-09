@@ -13,4 +13,7 @@ interface ClienteDao : BaseDao<Cliente> {
 
     @Query("DELETE FROM cliente")
     fun truncate()
+
+    @Query("SELECT * FROM cliente WHERE id = :id")
+    fun findById(id : Long) : Cliente
 }

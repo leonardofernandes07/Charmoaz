@@ -2,6 +2,13 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <data>
+
+        <variable
+            name="titulo"
+            type="String" />
+    </data>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -22,7 +29,7 @@
                 android:layout_margin="7.5dp"
                 android:fontFamily="cursive"
                 android:gravity="center"
-                android:text="Cadastre o Cliente"
+                android:text="@{titulo}"
                 android:textColor="#EE3B3D3B"
                 android:textColorHighlight="#E7CF17"
                 android:textColorLink="#E7D319"
@@ -220,17 +227,43 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="7.5dp" />
-            </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fab"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom|end"
-                android:layout_margin="@dimen/fab_margin"
-                android:src="@drawable/ic_save_black_24dp"
-                app:backgroundTint="@color/colorPrimary"
-                app:startIconDrawable="@drawable/ic_save_black_24dp" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="5dp"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/fabEdit"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left|bottom"
+                        android:layout_margin="@dimen/fab_margin"
+                        android:clickable="true"
+                        app:backgroundTint="@color/colorPrimary"
+                        app:srcCompat="@drawable/ic_create_black_24dp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="right"
+                        android:orientation="horizontal">
+
+                        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                            android:id="@+id/fab"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="bottom|end"
+                            android:layout_margin="@dimen/fab_margin"
+                            android:src="@drawable/ic_save_black_24dp"
+                            app:backgroundTint="@color/colorPrimary"
+                            app:startIconDrawable="@drawable/ic_save_black_24dp" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </com.google.android.material.textfield.TextInputLayout>
 
         </LinearLayout>
     </ScrollView>

@@ -1,6 +1,5 @@
 package com.example.charmoaz.ui
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import br.com.ambev.comodato.callerassinae.data.repositories.Repository
@@ -8,12 +7,15 @@ import com.example.charmoaz.asImmutable
 import com.example.charmoaz.data.entity.Cliente
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.annotations.NonNull
-import io.reactivex.rxjava3.core.*
+import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.CompletableEmitter
+import io.reactivex.rxjava3.core.CompletableOnSubscribe
 import io.reactivex.rxjava3.disposables.CompositeDisposable
-import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 
-class MainViewModel : ViewModel() {
+class ViewModelCadastro : ViewModel(){
+
+
 
     private val compositeDisposable = CompositeDisposable()
 
@@ -35,7 +37,7 @@ class MainViewModel : ViewModel() {
         fetchCliente()
     }
 
-    fun fetchCliente() {
+    private fun fetchCliente() {
         _loading.value = true
 
         repository.getAll()
@@ -56,16 +58,17 @@ class MainViewModel : ViewModel() {
         compositeDisposable.clear()
     }
 
-    fun deletCliente(cliente: Cliente) {
-        Completable.create { emmiter: @NonNull CompletableEmitter ->
+    fun saveCliente(cliente: Cliente) {
+        _loading.value = true
+
+        Completable.create(CompletableOnSubscribe { emmiter: @NonNull CompletableEmitter ->
             try {
-                repository.delet(cliente)
+                repository.insert(cliente)
                 emmiter.onComplete()
             } catch (e: Exception) {
                 emmiter.onError(e)
             }
-        }
-            .subscribeOn(Schedulers.computation())
+        }).subscribeOn(Schedulers.computation())
             .observeOn(AndroidSchedulers.mainThread())
             .doOnComplete() {
                 fetchCliente()
@@ -75,4 +78,20 @@ class MainViewModel : ViewModel() {
             }
             .subscribe()
     }
+
+    fun selectById(id : Long): MutableLiveData<Cliente> {
+        repository.getClienteById(id)
+            .doOnNext {
+                _cliente.postValue(it)
+            }
+            .doOnComplete {
+                _loading.postValue(false)
+            }
+            .subscribe().also {
+                compositeDisposable.remove(it)
+                compositeDisposable.add(it)
+            }
+        return _cliente
+    }
 }
+

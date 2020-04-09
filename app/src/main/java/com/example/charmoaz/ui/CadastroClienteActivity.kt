@@ -1,10 +1,12 @@
 package com.example.charmoaz.ui
 
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import br.com.hbsis.padawan.posmanagement.ui.cadastrocliente.VerificacoesTextWatcher
 import com.example.charmoaz.R
@@ -14,12 +16,20 @@ import com.example.charmoaz.util.Mascaras
 import com.example.charmoaz.util.VerificaCampo
 import kotlin.random.Random
 
-class CadastroClienteActivity : AppCompatActivity() , MainAdapter.OnItemAction{
+class CadastroClienteActivity : AppCompatActivity() {
+
+    companion object {
+        const val EXTRA_CLIENT_ID = "EXTRA_CLIENT_ID"
+    }
+
+    private val clientId by lazy { intent.extras?.getLong(EXTRA_CLIENT_ID) }
 
     private val verifica = VerificaCampo()
+    private var telaCadastro = true
+    private var editado = false
 
-    private val viewModel: MainViewModel by lazy {
-        ViewModelProvider(this).get(MainViewModel::class.java)
+    private val viewModel: ViewModelCadastro by lazy {
+        ViewModelProvider(this).get(ViewModelCadastro::class.java)
     }
 
     private val binding: ActivityCadastroClienteBinding by lazy {
@@ -33,14 +43,55 @@ class CadastroClienteActivity : AppCompatActivity() , MainAdapter.OnItemAction{
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cadastro_cliente)
 
+        clientId?.let { onDetail(it) }
+
+        if(telaCadastro){
+            binding.titulo = "Cadastro de Cliente"
+        }else{
+            binding.titulo = "Informações do Cliente"
+            binding.editNome.isEnabled = false
+            binding.editCpf.isEnabled = false
+            binding.editEmail.isEnabled = false
+            binding.editCelular.isEnabled = false
+            binding.editCidade.isEnabled = false
+            binding.editBairro.isEnabled = false
+            binding.editEndereco.isEnabled = false
+            binding.editNumero.isEnabled = false
+            binding.editDescricao.isEnabled = false
+        }
+
+        binding.fabEdit.setOnClickListener {
+            editado = true
+            binding.editNome.isEnabled = true
+            binding.editCpf.isEnabled = true
+            binding.editEmail.isEnabled = true
+            binding.editCelular.isEnabled = true
+            binding.editCidade.isEnabled = true
+            binding.editBairro.isEnabled = true
+            binding.editEndereco.isEnabled = true
+            binding.editNumero.isEnabled = true
+            binding.editDescricao.isEnabled = true
+        }
         binding.fab.setOnClickListener {
-            salvarCliente()
+            if (telaCadastro) {
+                cadastrarCliente()
+            } else {
+                salvandoAlteracaoCliente()
+            }
         }
         virificaoTw()
     }
 
+    private fun salvandoAlteracaoCliente() {
+        if (editado){
+            if(verificaoDeCampo()){
 
-    private fun salvarCliente() {
+            }
+        }
+    }
+
+
+    private fun cadastrarCliente() {
         val randomValues = List(1) { Random.nextInt(0, 999) }
         if (verificaoDeCampo()) {
             val cliente = Cliente(
@@ -131,14 +182,18 @@ class CadastroClienteActivity : AppCompatActivity() , MainAdapter.OnItemAction{
     }
 
     override fun onBackPressed() {
-        val builder = AlertDialog.Builder(this)
-        builder.setTitle("Atenção!")
-        builder.setMessage("Você deseja sair sem salvar?")
-        builder.setPositiveButton(getString(R.string.sair)) { _, _ ->
-            finish()
+        if (editado || telaCadastro) {
+            val builder = AlertDialog.Builder(this)
+            builder.setTitle("Atenção!")
+            builder.setMessage("Você deseja sair sem salvar?")
+            builder.setPositiveButton(getString(R.string.sair)) { _, _ ->
+                finish()
+            }
+            builder.setNegativeButton(getString(R.string.cancelar)) { _, _ -> }
+            builder.show()
+        }else{
+            super.onBackPressed()
         }
-        builder.setNegativeButton(getString(R.string.cancelar)) { _, _ -> }
-        builder.show()
     }
 
     override fun finish() {
@@ -146,10 +201,20 @@ class CadastroClienteActivity : AppCompatActivity() , MainAdapter.OnItemAction{
         overridePendingTransition(R.xml.fade_in, R.xml.mover_direita)
     }
 
-    override fun onDelete(cliente: Cliente) {}
-
-    override fun onDetail(id: Long) {
-
+    private fun onDetail(id: Long) {
+        telaCadastro = false
+        viewModel.selectById(id).observe(this, Observer { cliente: Cliente ->
+            binding.editNome.setText(cliente.clienteNome)
+            binding.editCpf.setText(cliente.clienteCpf)
+            binding.editEmail.setText(cliente.clienteEmail)
+            binding.editCelular.setText(cliente.clienteCelular)
+            binding.editCidade.setText(cliente.cidade)
+            binding.editBairro.setText(cliente.bairro)
+            binding.editEndereco.setText(cliente.endereco)
+            binding.editNumero.setText(cliente.numero)
+            binding.editDescricao.setText(cliente.clienteDescricao)
+        })
     }
 }
+
 
