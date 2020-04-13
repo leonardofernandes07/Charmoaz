@@ -38,7 +38,7 @@
                     android:paddingTop="25dp"
                     android:paddingEnd="10dp"
                     android:paddingBottom="25dp"
-                    android:text="@{cliente.clienteId + ` - ` + cliente.clienteNome}"
+                    android:text="@{cliente.id + ` - ` + cliente.clienteNome}"
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5" />
 
                 <ImageButton

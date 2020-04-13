@@ -32,6 +32,7 @@ class VerificacoesTextWatcher : TextWatcher {
     ) {
         if (layoutText!!.editText!!.text.toString() == "") {
             layoutText!!.error = "Preencha Campo"
+            layoutText!!.isErrorEnabled = true
         } else {
             layoutText!!.isErrorEnabled = false
             when (layoutText!!.editText!!.id) {

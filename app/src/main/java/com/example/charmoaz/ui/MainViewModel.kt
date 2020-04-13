@@ -1,6 +1,5 @@
 package com.example.charmoaz.ui
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import br.com.ambev.comodato.callerassinae.data.repositories.Repository
@@ -10,7 +9,6 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.annotations.NonNull
 import io.reactivex.rxjava3.core.*
 import io.reactivex.rxjava3.disposables.CompositeDisposable
-import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 
 class MainViewModel : ViewModel() {
@@ -59,7 +57,7 @@ class MainViewModel : ViewModel() {
     fun deletCliente(cliente: Cliente) {
         Completable.create { emmiter: @NonNull CompletableEmitter ->
             try {
-                repository.delet(cliente)
+                repository.delete(cliente)
                 emmiter.onComplete()
             } catch (e: Exception) {
                 emmiter.onError(e)

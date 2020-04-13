@@ -8,25 +8,23 @@ import kotlinx.android.parcel.Parcelize
 data class Cliente @JvmOverloads constructor(
     @ColumnInfo(name = "id")
     @PrimaryKey(autoGenerate = true)
-    var id: Long,
-    @ColumnInfo(name = "cliente_Id")
-    var clienteId: Long,
+    var id: Long = 0,
     @ColumnInfo(name = "cliente_Nome")
-    var clienteNome: String,
+    var clienteNome: String = "",
     @ColumnInfo(name = "cliente_cpf")
-    var clienteCpf: String,
+    var clienteCpf: String = "",
     @ColumnInfo(name = "cliente_email")
-    var clienteEmail: String,
+    var clienteEmail: String = "",
     @ColumnInfo(name = "cliente_celular")
-    var clienteCelular: String,
+    var clienteCelular: String = "",
     @ColumnInfo(name = "cidade")
-    var cidade: String,
+    var cidade: String = "",
     @ColumnInfo(name = "bairro")
-    var bairro: String,
+    var bairro: String = "",
     @ColumnInfo(name = "endereco")
-    var endereco: String,
+    var endereco: String = "",
     @ColumnInfo(name = "numero")
-    var numero: String,
+    var numero: String = "",
     @ColumnInfo(name = "cliente_Descricao")
-    var clienteDescricao: String
+    var clienteDescricao: String = ""
 )

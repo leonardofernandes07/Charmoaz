@@ -1,7 +1,6 @@
 package com.example.charmoaz.ui
 
 import android.os.Bundle
-import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -14,7 +13,6 @@ import com.example.charmoaz.data.entity.Cliente
 import com.example.charmoaz.databinding.ActivityCadastroClienteBinding
 import com.example.charmoaz.util.Mascaras
 import com.example.charmoaz.util.VerificaCampo
-import kotlin.random.Random
 
 class CadastroClienteActivity : AppCompatActivity() {
 
@@ -23,10 +21,7 @@ class CadastroClienteActivity : AppCompatActivity() {
     }
 
     private val clientId by lazy { intent.extras?.getLong(EXTRA_CLIENT_ID) }
-
     private val verifica = VerificaCampo()
-    private var telaCadastro = true
-    private var editado = false
 
     private val viewModel: ViewModelCadastro by lazy {
         ViewModelProvider(this).get(ViewModelCadastro::class.java)
@@ -43,92 +38,118 @@ class CadastroClienteActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cadastro_cliente)
 
-        clientId?.let { onDetail(it) }
+        viewModel.setClientId(clientId)
 
-        if(telaCadastro){
+        if (clientId == null) {
             binding.titulo = "Cadastro de Cliente"
-        }else{
+        } else {
             binding.titulo = "Informações do Cliente"
-            binding.editNome.isEnabled = false
-            binding.editCpf.isEnabled = false
-            binding.editEmail.isEnabled = false
-            binding.editCelular.isEnabled = false
-            binding.editCidade.isEnabled = false
-            binding.editBairro.isEnabled = false
-            binding.editEndereco.isEnabled = false
-            binding.editNumero.isEnabled = false
-            binding.editDescricao.isEnabled = false
         }
+
+        viewModel.cliente.observe(this, Observer {
+            binding.cliente = it
+        })
+
+        viewModel.isEditing.observe(this, Observer {
+            binding.editNome.isEnabled = it
+            binding.editCpf.isEnabled = it
+            binding.editEmail.isEnabled = it
+            binding.editCelular.isEnabled = it
+            binding.editCidade.isEnabled = it
+            binding.editBairro.isEnabled = it
+            binding.editEndereco.isEnabled = it
+            binding.editNumero.isEnabled = it
+            binding.editDescricao.isEnabled = it
+        })
+
+        viewModel.finished.observe(this, Observer {
+            if (it)
+                finish()
+        })
 
         binding.fabEdit.setOnClickListener {
-            editado = true
-            binding.editNome.isEnabled = true
-            binding.editCpf.isEnabled = true
-            binding.editEmail.isEnabled = true
-            binding.editCelular.isEnabled = true
-            binding.editCidade.isEnabled = true
-            binding.editBairro.isEnabled = true
-            binding.editEndereco.isEnabled = true
-            binding.editNumero.isEnabled = true
-            binding.editDescricao.isEnabled = true
+            viewModel.isEditing()
         }
+
         binding.fab.setOnClickListener {
-            if (telaCadastro) {
-                cadastrarCliente()
-            } else {
-                salvandoAlteracaoCliente()
-            }
+            salvaCliente()
         }
-        virificaoTw()
-    }
-
-    private fun salvandoAlteracaoCliente() {
-        if (editado){
-            if(verificaoDeCampo()){
-
-            }
-        }
+        verificaoTextwatcher()
     }
 
 
-    private fun cadastrarCliente() {
-        val randomValues = List(1) { Random.nextInt(0, 999) }
+    private fun salvaCliente() {
         if (verificaoDeCampo()) {
-            val cliente = Cliente(
-                id = 0,
-                clienteId = 0,
-                clienteNome = binding.editNome.text.toString().trim(),
-                clienteCpf = binding.editCpf.text.toString().trim(),
-                clienteEmail = binding.editEmail.text.toString().trim(),
-                clienteCelular = binding.editCelular.text.toString().trim(),
-                cidade = binding.editCidade.text.toString().trim(),
-                bairro = binding.editBairro.text.toString().trim(),
-                endereco = binding.editEndereco.text.toString().trim(),
-                numero = binding.editNumero.text.toString().trim(),
+            val cliente = viewModel.cliente.value!!.copy()
+
+            cliente.apply {
+                clienteNome = binding.editNome.text.toString().trim()
+                clienteCpf = binding.editCpf.text.toString().trim()
+                clienteEmail = binding.editEmail.text.toString().trim()
+                clienteCelular = binding.editCelular.text.toString().trim()
+                cidade = binding.editCidade.text.toString().trim()
+                bairro = binding.editBairro.text.toString().trim()
+                endereco = binding.editEndereco.text.toString().trim()
+                numero = binding.editNumero.text.toString().trim()
                 clienteDescricao = binding.editDescricao.text.toString().trim()
-            )
-            cliente.clienteId = randomValues[0].toLong()
+            }
             viewModel.saveCliente(cliente)
-            Toast.makeText(applicationContext, "Cadastro Válido", Toast.LENGTH_LONG).show()
-            finish()
         } else {
             Toast.makeText(applicationContext, "Cadastro Inválido", Toast.LENGTH_LONG).show()
         }
     }
 
     private fun verificaoDeCampo(): Boolean {
-        return verifica.verificaVazio(binding.editNome.text.toString()) &&
-                verifica.verificaCPF(binding.editCpf.text.toString()) &&
-                verifica.verificaEmail(binding.editEmail.text.toString()) &&
-                verifica.verificaCelular(binding.editCelular.text.toString()) &&
-                verifica.verificaVazio(binding.editCidade.text.toString()) &&
-                verifica.verificaVazio(binding.editBairro.text.toString()) &&
-                verifica.verificaVazio(binding.editEndereco.text.toString()) &&
-                verifica.verificaNumero(binding.editNumero.text.toString()) &&
-                verifica.verificaVazio(binding.editDescricao.text.toString())
+        var camposOk = true
+        if (!verifica.verificaVazio(binding.editNome.text.toString())) {
+            binding.layoutNome.error = "${binding.editNome.hint} Vazio"
+            binding.layoutNome.isErrorEnabled = true
+            camposOk = false
+        }
+        if (!verifica.verificaCPF(binding.editCpf.text.toString())) {
+            binding.layoutCpf.error = "${binding.editCpf.hint} Vazio"
+            binding.layoutCpf.isErrorEnabled = true
+            camposOk = false
+        }
+        if (!verifica.verificaEmail(binding.editEmail.text.toString())) {
+            binding.layoutEmail.error = "${binding.editEmail.hint} Vazio"
+            binding.layoutEmail.isErrorEnabled = true
+            camposOk = false
+        }
+        if (!verifica.verificaCelular(binding.editCelular.text.toString())) {
+            binding.layoutCelular.error = "${binding.editCelular.hint} Vazio"
+            binding.layoutCelular.isErrorEnabled = true
+            camposOk = false
+        }
+        if (!verifica.verificaVazio(binding.editCidade.text.toString())) {
+            binding.layoutCidade.error = "${binding.editCidade.hint} Vazio"
+            binding.layoutCidade.isErrorEnabled = true
+            camposOk = false
+        }
+        if (!verifica.verificaVazio(binding.editBairro.text.toString())) {
+            binding.layoutBairro.error = "${binding.editBairro.hint} Vazio"
+            binding.layoutBairro.isErrorEnabled = true
+            camposOk = false
+        }
+        if (!verifica.verificaVazio(binding.editEndereco.text.toString())) {
+            binding.layoutEndereco.error = "${binding.editEndereco.hint} Vazio"
+            binding.layoutEndereco.isErrorEnabled = true
+            camposOk = false
+        }
+        if (!verifica.verificaNumero(binding.editNumero.text.toString())) {
+            binding.layoutNumero.error = "${binding.editNumero.hint} Vazio"
+            binding.layoutNumero.isErrorEnabled = true
+            camposOk = false
+        }
+        if (!verifica.verificaDesc(binding.editDescricao.text.toString())) {
+            binding.layoutDescricao.error = "${binding.editDescricao} Vazio"
+            binding.layoutDescricao.isErrorEnabled = true
+            camposOk = false
+        }
+        return camposOk
     }
 
-    private fun virificaoTw() {
+    private fun verificaoTextwatcher() {
         setMask()
         binding.editNome.addTextChangedListener(VerificacoesTextWatcher(binding.layoutNome))
         binding.editCpf.addTextChangedListener(VerificacoesTextWatcher(binding.layoutCpf))
@@ -182,7 +203,7 @@ class CadastroClienteActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        if (editado || telaCadastro) {
+        if (viewModel.isEditing.value == true) {
             val builder = AlertDialog.Builder(this)
             builder.setTitle("Atenção!")
             builder.setMessage("Você deseja sair sem salvar?")
@@ -191,7 +212,7 @@ class CadastroClienteActivity : AppCompatActivity() {
             }
             builder.setNegativeButton(getString(R.string.cancelar)) { _, _ -> }
             builder.show()
-        }else{
+        } else {
             super.onBackPressed()
         }
     }
@@ -199,21 +220,6 @@ class CadastroClienteActivity : AppCompatActivity() {
     override fun finish() {
         super.finish()
         overridePendingTransition(R.xml.fade_in, R.xml.mover_direita)
-    }
-
-    private fun onDetail(id: Long) {
-        telaCadastro = false
-        viewModel.selectById(id).observe(this, Observer { cliente: Cliente ->
-            binding.editNome.setText(cliente.clienteNome)
-            binding.editCpf.setText(cliente.clienteCpf)
-            binding.editEmail.setText(cliente.clienteEmail)
-            binding.editCelular.setText(cliente.clienteCelular)
-            binding.editCidade.setText(cliente.cidade)
-            binding.editBairro.setText(cliente.bairro)
-            binding.editEndereco.setText(cliente.endereco)
-            binding.editNumero.setText(cliente.numero)
-            binding.editDescricao.setText(cliente.clienteDescricao)
-        })
     }
 }
 

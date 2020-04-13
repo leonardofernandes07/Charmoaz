@@ -7,6 +7,10 @@
         <variable
             name="titulo"
             type="String" />
+
+        <variable
+            name="cliente"
+            type="com.example.charmoaz.data.entity.Cliente" />
     </data>
 
     <ScrollView
@@ -21,6 +25,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
 
             <TextView
                 android:id="@+id/tv_titulo"
@@ -58,6 +63,7 @@
                     android:id="@+id/edit_nome"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:text="@{cliente.clienteNome}"
                     android:layout_margin="7.5dp" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -70,7 +76,6 @@
                 app:boxStrokeColor="@color/colorAccent"
                 app:endIconTint="#000000"
                 app:errorEnabled="true"
-                app:helperText="@string/Obrig"
                 app:helperTextEnabled="true"
                 app:hintTextColor="#000000"
                 app:startIconDrawable="@drawable/ic_create_black_24dp">
@@ -79,6 +84,7 @@
                     android:id="@+id/edit_cpf"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:text="@{cliente.clienteCpf}"
                     android:layout_margin="7.5dp" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -91,8 +97,6 @@
                 app:boxStrokeColor="@color/colorAccent"
                 app:endIconTint="#000000"
                 app:errorEnabled="true"
-                app:helperText="@string/Obrig"
-                app:helperTextEnabled="true"
                 app:hintTextColor="#000000"
                 app:startIconDrawable="@drawable/ic_email_black_24dp">
 
@@ -100,6 +104,7 @@
                     android:id="@+id/edit_email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:text="@{cliente.clienteEmail}"
                     android:layout_margin="7.5dp" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -121,6 +126,7 @@
                     android:id="@+id/edit_celular"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:text="@{cliente.clienteCelular}"
                     android:layout_margin="7.5dp" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -142,6 +148,7 @@
                     android:id="@+id/edit_cidade"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:text="@{cliente.cidade}"
                     android:layout_margin="7.5dp" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -163,6 +170,7 @@
                     android:id="@+id/edit_bairro"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:text="@{cliente.bairro}"
                     android:layout_margin="7.5dp" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -184,6 +192,7 @@
                     android:id="@+id/edit_endereco"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:text="@{cliente.endereco}"
                     android:layout_margin="7.5dp" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -205,6 +214,7 @@
                     android:id="@+id/edit_numero"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:text="@{cliente.numero}"
                     android:layout_margin="7.5dp" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -217,8 +227,6 @@
                 app:boxStrokeColor="@color/colorAccent"
                 app:endIconTint="#000000"
                 app:errorEnabled="true"
-                app:helperText="@string/Obrig"
-                app:helperTextEnabled="true"
                 app:hintTextColor="#000000"
                 app:startIconDrawable="@drawable/ic_create_black_24dp">
 
@@ -226,6 +234,7 @@
                     android:id="@+id/edit_descricao"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:text="@{cliente.clienteDescricao}"
                     android:layout_margin="7.5dp" />
 
                 <LinearLayout

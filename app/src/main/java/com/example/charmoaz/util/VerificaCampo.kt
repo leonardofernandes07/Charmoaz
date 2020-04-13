@@ -23,4 +23,8 @@ class VerificaCampo {
     fun verificaCelular(campo: String): Boolean {
         return campo.length == 16
     }
+
+    fun verificaDesc(campo: String):Boolean{
+        return campo.length >= 3 || campo.isEmpty()
+    }
 }

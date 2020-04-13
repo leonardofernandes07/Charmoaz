@@ -35,7 +35,7 @@ class Repository {
 
 
 
-    fun insert(cliente: Cliente): Long {
+    fun insertOrUpdate(cliente: Cliente): Long {
         val dao = AppApplication.database.clienteDao()
         return if (cliente.id == 0L)
             dao.insert(cliente)
@@ -45,10 +45,9 @@ class Repository {
         }
     }
 
-    fun delet(cliente: Cliente){
+    fun delete(cliente: Cliente){
         val dao = AppApplication.database.clienteDao()
         dao.delete(cliente)
     }
-
 
 }
