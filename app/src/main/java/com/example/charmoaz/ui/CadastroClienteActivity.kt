@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -42,6 +43,8 @@ class CadastroClienteActivity : AppCompatActivity() {
 
         if (clientId == null) {
             binding.titulo = "Cadastro de Cliente"
+            binding.fabEdit.isEnabled = false
+            binding.fabEdit.isVisible = false
         } else {
             binding.titulo = "Informações do Cliente"
         }

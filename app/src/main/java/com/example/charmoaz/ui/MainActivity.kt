@@ -3,7 +3,7 @@ package com.example.charmoaz.ui
 import android.Manifest
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
+import android.provider.CalendarContract
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
@@ -19,6 +19,7 @@ import com.example.charmoaz.databinding.ActivityMainBinding
 import com.example.charmoaz.showToast
 import pub.devrel.easypermissions.EasyPermissions
 import pub.devrel.easypermissions.PermissionRequest
+
 
 class MainActivity : AppCompatActivity(), MainAdapter.OnItemAction {
 
@@ -61,7 +62,7 @@ class MainActivity : AppCompatActivity(), MainAdapter.OnItemAction {
         viewModel.errorMessage.observe(
             this, Observer { this.showToast(it) })
 
-        binding.fab.setOnClickListener(View.OnClickListener {
+        binding.fab.setOnClickListener{
             val i = Intent(applicationContext, CadastroClienteActivity::class.java)
             val activityOpyionsCompat: ActivityOptionsCompat =
                 ActivityOptionsCompat.makeCustomAnimation(
@@ -70,7 +71,13 @@ class MainActivity : AppCompatActivity(), MainAdapter.OnItemAction {
                 )
             ActivityCompat.startActivity(this@MainActivity, i, activityOpyionsCompat.toBundle())
 
-        })
+        }
+
+        binding.calendar.setOnClickListener{
+            val intent = Intent(Intent.ACTION_INSERT)
+            intent.data = CalendarContract.Events.CONTENT_URI
+            startActivity(intent)
+        }
 
 
         binding.includeContentMain.search.setOnQueryTextListener(object :

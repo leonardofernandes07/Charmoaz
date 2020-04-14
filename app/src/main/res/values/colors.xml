@@ -3,4 +3,5 @@
     <color name="colorPrimary">#ffc400</color>
     <color name="colorPrimaryDark">#c79400</color>
     <color name="colorAccent">#000000</color>
+    <color name="colorCardView">#E3E3E3</color>
 </resources>

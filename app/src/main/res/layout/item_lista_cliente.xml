@@ -22,7 +22,8 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/mtrl_card_spacing"
             android:layout_marginTop="@dimen/mtrl_card_spacing"
-            android:layout_marginRight="@dimen/mtrl_card_spacing">
+            android:layout_marginRight="@dimen/mtrl_card_spacing"
+            app:cardBackgroundColor="@color/colorCardView">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -43,11 +44,11 @@
 
                 <ImageButton
                     android:id="@+id/delet"
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_margin="20dp"
                     android:layout_weight="1"
-                    style="@style/Widget.MaterialComponents.Button.TextButton"
                     app:srcCompat="@drawable/ic_delete_black_24dp" />
 
             </LinearLayout>
